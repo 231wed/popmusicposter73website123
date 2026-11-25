@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pop Music Night</title>
+
+    <style>
+        body {
+            background-color: #1f0761;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 35px;
+            margin-left: 20px;
+        }
+
+        .header img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #ff4dff;
+            box-shadow: 0 0 15px #ff00ff;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: 50px;
+            color: #ff4dff;
+            text-shadow: 0 0 15px #000000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(15px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .time-button {
+            background-color: #a020f0;
+            color: white;
+            border: 3px solid #822fba;
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            min-width: 280px;
+            margin: 10px;
+        }
+
+        .time-button:hover {
+            background-color: #d000ff;
+            box-shadow: 0 0 30px #d000ff;
+        }
+
+        .info {
+            font-size: 15px;
+            color: #ffbaff;
+            margin-top: 8px;
+            font-weight: normal;
+        }
+
+        .description {
+            font-size: 50px;
+            font-weight: bold;
+            color: #99ccff;
+            text-shadow: 0 0 15px #99ccff;
+            margin-top: 50px;
+            line-height: 1.5;
+        }
+
+        .enjoy {
+            font-size: 45px;
+            color: #FFF;
+            text-shadow: 0 0 20px #140101;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .charity {
+            font-size: 21px;
+            color: #ffe0a3;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* COUNTDOWN SECTION */
+
+        .countdown-section {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 650px;
+            background: rgba(160, 32, 240, 0.15);
+            border: 2px solid #ff4dff;
+            border-radius: 18px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+        }
+
+        .countdown-title {
+            color: #ffbaff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            min-width: 85px;
+            padding: 12px 8px;
+            background: #1f0761;
+            border: 2px solid #a020f0;
+            border-radius: 12px;
+        }
+
+        .countdown-number {
+            display: block;
+            color: #ffffff;
+            font-size: 35px;
+            font-weight: bold;
+            text-shadow: 0 0 12px #ff00ff;
+        }
+
+        .countdown-label {
+            display: block;
+            color: #ffbaff;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        #countdownMessage {
+            color: #ffe0a3;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* SONG SECTION */
+
+        .song-section {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 650px;
+            background: rgba(153, 204, 255, 0.1);
+            border: 2px solid #99ccff;
+            border-radius: 18px;
+            box-shadow: 0 0 18px rgba(153, 204, 255, 0.25);
+        }
+
+        .song-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .song-link {
+            color: #ffbaff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .song-link:hover {
+            color: #ff4dff;
+        }
+
+        .play-button {
+            background-color: #7a18d6;
+            color: #ffffff;
+            border: 2px solid #ffbaff;
+            padding: 10px 26px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-bottom: 16px;
+        }
+
+        .play-button:hover {
+            background-color: #d000ff;
+            box-shadow: 0 0 20px #d000ff;
+            transform: scale(1.04);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 2px solid #ff4dff;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .song-fallback {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #ffe0a3;
+        }
+
+        .song-fallback a {
+            color: #99ccff;
+        }
+
+        /* LIKE SECTION */
+
+        .like-section {
+            margin-top: 35px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .like-message {
+            font-size: 25px;
+            color: #ffbaff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #likeButton {
+            background-color: #ff1493;
+            color: white;
+            border: 3px solid #ff69b4;
+            padding: 18px 55px;
+            border-radius: 15px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px #ff1493;
+        }
+
+        #likeButton:hover:not(:disabled) {
+            background-color: #ff00ff;
+            box-shadow: 0 0 30px #ff00ff;
+            transform: scale(1.08);
+        }
+
+        #likeButton:disabled {
+            cursor: not-allowed;
+            opacity: 0.75;
+        }
+
+        #likeCount {
+            color: #ffbaff;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        #likeStatus {
+            color: #ffbaff;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .more-link {
+            font-size: 12px;
+            color: #d6b3ff;
+            margin-top: 16px;
+        }
+
+        .more-link a {
+            color: #ffbaff;
+            text-decoration: underline;
+        }
+
+        .more-link a:hover {
+            color: #ffffff;
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                margin-left: 0;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .description {
+                font-size: 30px;
+            }
+
+            .enjoy {
+                font-size: 35px;
+            }
+
+            .time-button {
+                min-width: 240px;
+            }
+
+            .countdown-title {
+                font-size: 20px;
+            }
+
+            .countdown {
+                gap: 8px;
+            }
+
+            .countdown-item {
+                min-width: 60px;
+                padding: 10px 5px;
+            }
+
+            .countdown-number {
+                font-size: 25px;
+            }
+
+            .song-text {
+                font-size: 17px;
+            }
+        }
+    .lineup-section {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 650px;
+            background: rgba(160, 32, 240, 0.12);
+            border: 2px solid #ffbaff;
+            border-radius: 18px;
+            box-shadow: 0 0 18px rgba(255, 77, 255, 0.25);
+        }
+
+        .lineup-title {
+            color: #ffbaff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .lineup-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .lineup-item {
+            padding: 12px 16px;
+            background: rgba(31, 7, 97, 0.85);
+            border: 1px solid #a020f0;
+            border-radius: 12px;
+        }
+
+        .lineup-act {
+            font-size: 18px;
+            font-weight: bold;
+            color: #99ccff;
+        }
+
+        .lineup-desc {
+            font-size: 14px;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .lineup-title {
+                font-size: 20px;
+            }
+
+            .lineup-act {
+                font-size: 16px;
+            }
+        }
+/* SHARE BUTTON */
+
+.action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        #shareButton {
+            background-color: #7a18d6;
+            color: white;
+            border: 3px solid #ffbaff;
+            padding: 18px 36px;
+            border-radius: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px #7a18d6;
+        }
+
+        #shareButton:hover {
+            background-color: #b829ff;
+            box-shadow: 0 0 28px #b829ff;
+            transform: scale(1.06);
+        }
+
+        #shareStatus {
+            color: #99ccff;
+            font-size: 14px;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <img
+            src="https://cdn.artphotolimited.com/images/5fb28218bd40b870a885a405/300x300/pop-singer-michael-jackson-in-bremen-1997.jpg"
+            alt="Michael Jackson"
+        >
+
+        <h1>WELCOME TO THE POP MUSIC NIGHT🎶</h1>
+    </div>
+
+    <button class="time-button" onclick="showTime()">
+       🕒 TIME
+        <br>
+        <small>(click)</small>
+        <div class="info" id="time"></div>
+    </button>
+
+    <button class="time-button" onclick="showPlace()">
+       📍 PLACE
+        <br>
+        <small>(click)</small>
+        <div class="info" id="place"></div>
+    </button>
+
+    <div class="description">
+        POP MUSIC, POP DANCE, POP PERFORMANCE AND MORE!!! 😎
+    </div>
+
+    <div class="enjoy">
+        ENJOY!!
+    </div>
+
+    <div class="charity">
+        All money will go to charity to help poor children.😊
+    </div>
+
+    <!-- COUNTDOWN -->
+
+    <div class="countdown-section">
+
+        <div class="countdown-title">
+            Countdown to Pop Music Night (By your local time)
+        </div>
+
+        <div class="countdown">
+
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">0</span>
+                <span class="countdown-label">DAYS</span>
+            </div>
+
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">HOURS</span>
+            </div>
+
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">MINUTES</span>
+            </div>
+
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">SECONDS</span>
+            </div>
+
+        </div>
+
+        <div id="countdownMessage">
+            Until 7:45 PM, Thursday, December 3, 2026
+        </div>
+
+    </div>
+
+    <!-- UPCOMING SONG: BILLIE JEAN -->
+
+    <div class="song-section">
+        <div class="song-text">
+            The song we will perform : Billie Jean by Michael Jackson,
+            <span class="song-link" onclick="focusPlayer()">click here to listen.</span>
+        </div>
+
+        <button class="play-button" type="button" onclick="focusPlayer()">
+            ▶ Play
+        </button>
+
+        <div class="video-wrapper" id="videoBox">
+            <iframe
+                id="billieJeanFrame"
+                src="https://www.youtube.com/embed/Zi_XLOBDo_Y?rel=0"
+                title="Michael Jackson - Billie Jean (Official Video)"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+            ></iframe>
+        </div>
+
+        <div class="song-fallback">
+            If the embedded video does not load, open on YouTube:
+            <a href="https://www.youtube.com/watch?v=Zi_XLOBDo_Y" target="_blank" rel="noopener noreferrer">
+                Billie Jean (Official Video)
+            </a>
+        </div>
+    </div>
+   <div class="lineup-section">
+        <div class="lineup-title">
+            🎤 Performance Line-up
+        </div>
+
+        <div class="lineup-list">
+            <div class="lineup-item">
+                <div class="lineup-act">1. Pop Opening Mashup, introducing about the performance.</div>
+                <div class="lineup-desc">High-energy pop medley to kick off the night.</div>
+            </div>
+
+            <div class="lineup-item">
+                <div class="lineup-act">2. "Billie Jean" – Michael Jackson Performance, perform by Tran Huu Khoi Nguyen</div>
+                <div class="lineup-desc">Our main pop dance and vocal performance of the evening.</div>
+            </div>
+
+            <div class="lineup-item">
+                <div class="lineup-act">3. Crowd Sing-Along &amp; Charity Finale </div>
+                <div class="lineup-desc">Interactive pop finale celebrating charity support for children.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIKE SECTION -->
+
+    <div class="like-section">
+
+        <div class="like-message">
+            If you like this website, please leave a like!
+        </div>
+
+        <button id="likeButton" disabled>
+            ♥ LIKE
+        </button>
+       <button id="shareButton" type="button" onclick="shareWebsite()">
+            🔗 SHARE
+        </button>
+
+        <div id="shareStatus"></div>
+        <div id="likeCount">
+            Loading likes...
+        </div>
+
+        <div id="likeStatus">
+            Connecting to Firebase...
+        </div>
+
+        <div class="more-link">
+            If you want more, click <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank" rel="noopener noreferrer">this</a>
+        </div>
+
+    </div>
+
+    <!-- GENERAL JAVASCRIPT -->
+
+    <script>
+
+        function showTime() {
+            document.getElementById("time").textContent =
+                "At 7:45 PM, Thursday, December third.";
+        }
+
+        function showPlace() {
+            document.getElementById("place").textContent =
+                "At class 7.3";
+        }
+
+        function focusPlayer() {
+            const box = document.getElementById("videoBox");
+            box.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        // COUNTDOWN
+
+        // December is month 11 because JavaScript months start at 0.
+        // The time is 7:45 PM in the visitor's local timezone.
+
+        const eventDate = new Date(2026, 11, 3, 19, 45, 0);
+
+        let countdownInterval = null;
+
+        function updateCountdown() {
+
+            const now = new Date();
+
+            const difference = eventDate.getTime() - now.getTime();
+
+            const daysElement = document.getElementById("days");
+            const hoursElement = document.getElementById("hours");
+            const minutesElement = document.getElementById("minutes");
+            const secondsElement = document.getElementById("seconds");
+            const messageElement = document.getElementById("countdownMessage");
+
+            // EVENT HAS STARTED
+
+            if (difference <= 0) {
+
+                daysElement.textContent = "0";
+                hoursElement.textContent = "00";
+                minutesElement.textContent = "00";
+                secondsElement.textContent = "00";
+
+                messageElement.textContent =
+                    "The event has started! Enjoy Pop Music Night!";
+
+                if (countdownInterval !== null) {
+                    clearInterval(countdownInterval);
+                }
+
+                return;
+            }
+
+            // CALCULATE REMAINING TIME
+
+            const days = Math.floor(
+                difference / (1000 * 60 * 60 * 24)
+            );
+
+            const hours = Math.floor(
+                (difference / (1000 * 60 * 60)) % 24
+            );
+
+            const minutes = Math.floor(
+                (difference / (1000 * 60)) % 60
+            );
+
+            const seconds = Math.floor(
+                (difference / 1000) % 60
+            );
+
+            // UPDATE THE DISPLAY
+
+            daysElement.textContent = days;
+
+            hoursElement.textContent =
+                String(hours).padStart(2, "0");
+
+            minutesElement.textContent =
+                String(minutes).padStart(2, "0");
+
+            secondsElement.textContent =
+                String(seconds).padStart(2, "0");
+        }
+
+        // UPDATE IMMEDIATELY WHEN THE PAGE LOADS
+
+        updateCountdown();
+
+        // UPDATE EVERY SECOND
+
+        countdownInterval = setInterval(updateCountdown, 1000);
+
+    </script>
+
+    <!-- FIREBASE -->
+
+    <script type="module">
+
+        import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+        import {
+            getAuth,
+            signInAnonymously,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        import {
+            getDatabase,
+            ref,
+            set,
+            onValue
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+
+        // FIREBASE CONFIGURATION
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaARjqxA7vCDZF7uDjd9VEiMF_cMyXtCo",
+            authDomain: "popmusicprojectcomeback73.firebaseapp.com",
+            databaseURL: "https://popmusicprojectcomeback73-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "popmusicprojectcomeback73",
+            storageBucket: "popmusicprojectcomeback73.firebasestorage.app",
+            messagingSenderId: "824386941352",
+            appId: "1:824386941352:web:a9d5e415e80fcb3501ed9d",
+            measurementId: "G-RMYEF8H7M2"
+        };
+
+
+        // INITIALIZE FIREBASE
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+
+        // HTML ELEMENTS
+
+        const likeButton = document.getElementById("likeButton");
+        const likeCount = document.getElementById("likeCount");
+        const likeStatus = document.getElementById("likeStatus");
+
+
+        // VARIABLES
+
+        let currentUser = null;
+        let alreadyLiked = false;
+        let stopLikesListener = null;
+
+
+        // UPDATE BUTTON
+
+        function updateButton() {
+
+            if (alreadyLiked) {
+
+                likeButton.textContent = "♥ LIKED";
+                likeButton.disabled = true;
+
+                likeStatus.textContent =
+                    "Thank you for your support!";
+
+            } else {
+
+                likeButton.textContent = "♥ LIKE";
+                likeButton.disabled = false;
+
+                likeStatus.textContent =
+                    "You can leave a like!";
+
+            }
+
+        }
+
+
+        // AUTHENTICATION STATE
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (!user) {
+
+                currentUser = null;
+                likeButton.disabled = true;
+
+                return;
+
+            }
+
+            currentUser = user;
+
+            // STOP PREVIOUS LISTENER
+
+            if (stopLikesListener) {
+                stopLikesListener();
+            }
+
+            // LISTEN TO DATABASE AFTER LOGIN
+
+            const likesRef = ref(database, "likes/users");
+
+            stopLikesListener = onValue(likesRef, (snapshot) => {
+
+                const users = snapshot.val() || {};
+
+                const totalLikes = Object.values(users)
+                    .filter(value => value === true).length;
+
+                likeCount.textContent = totalLikes + " LIKES";
+
+                alreadyLiked = users[currentUser.uid] === true;
+
+                updateButton();
+
+            }, (error) => {
+
+                console.error("Database error:", error);
+
+                likeStatus.textContent =
+                    "Unable to load likes.";
+
+            });
+
+        }, (error) => {
+
+            console.error("Authentication error:", error);
+
+            likeStatus.textContent =
+                "Authentication failed. Please try again later.";
+
+        });
+
+
+        // ANONYMOUS SIGN IN
+
+        signInAnonymously(auth).catch((error) => {
+
+            console.error("Sign-in error:", error);
+
+            likeStatus.textContent =
+                "Authentication failed. Please try again later.";
+
+        });
+
+
+        // GIVE LIKE
+
+        likeButton.addEventListener("click", async () => {
+
+            if (!currentUser || alreadyLiked) {
+                return;
+            }
+
+            likeButton.disabled = true;
+
+            likeStatus.textContent =
+                "Sending your like...";
+
+            const userLikeRef = ref(
+                database,
+                "likes/users/" + currentUser.uid
+            );
+
+            try {
+
+                await set(userLikeRef, true);
+
+                alreadyLiked = true;
+
+                updateButton();
+
+            } catch (error) {
+
+                console.error("Like error:", error);
+
+                likeButton.disabled = false;
+
+                likeStatus.textContent =
+                    "Unable to send like. Please try again.";
+
+            }
+
+        });
+       async function shareWebsite() {
+            const shareStatus = document.getElementById("shareStatus");
+            const shareData = {
+                title: "Pop Music Night",
+                text: "Join Pop Music Night at Class 7.3!",
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    shareStatus.textContent = "Thanks for sharing!";
+                    return;
+                } catch (err) {
+                    if (err.name === "AbortError") {
+                        return;
+                    }
+                }
+            }
+
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                shareStatus.textContent = "Link copied to clipboard!";
+            } catch (err) {
+                shareStatus.textContent = "Copy this link: " + window.location.href;
+            }
+        }
+
+    </script>
+
+</body>
+</html>
